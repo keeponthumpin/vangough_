@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Darker Grotesque', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: linear-gradient(-45deg, rgb(245, 0, 0), rgba(147, 80, 255, 0.171), #0066ff57, rgba(255, 0, 43, 0.397));
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        @keyframes gradientAnimation {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: row;
+            width: 90%;
+            max-width: 900px;
+            margin: auto;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: bottom;
+        }
+
+        .left-column,
+        .right-column {
+            flex: 1;
+            padding: 20px;
+            color: #ffffff;
+
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 18px;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #7e57c2;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #6a1b9a;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="left-column">
+            <h1>Welcome to Installation Management</h1>
+            <h2>Complete the form below to get started</h2>
+            <p>Please fill in your details:</p>
+        </div>
+        <div class="right-column">
+            <p>Please fill in the fields below:</p>
+            <form id="registrationForm" action="dashboard_v3_6.html">
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname" required>
+                <label for="lname">Last Name:</label>
+                <input type="text" id="lname" name="lname" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <button type="submit" id="startButton" disabled>Start</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("registrationForm");
+            const startButton = document.getElementById("startButton");
+
+            form.addEventListener("input", function () {
+                if (form.checkValidity()) {
+                    startButton.disabled = false;
+                } else {
+                    startButton.disabled = true;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

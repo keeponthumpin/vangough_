@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy Van Gogh - Mental Health Spa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        body.inactive {
+            pointer-events: none;
+        }
+    </style>
+    <style>
+            body {
+        font-family: 'Darker Grotesque', sans-serif;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background: linear-gradient(-45deg, #0B3C5D, #6A1B9A, #82B1FF, #BF79FF);
+        background-size: 400% 400%;
+        animation: gradientAnimation 15s ease infinite;
+    }
+
+    @keyframes gradientAnimation {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+    .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            margin-top: 60px;
+        }
+        
+        .dropdown-container, .buttons-section, .switch-container, .prev-next-buttons {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .button-dropdown, .button, .randomize-button, .restart-button, .back-button {
+            padding: 10px 25px;
+            font-size: 16px;
+            border: none;
+            background-color: #7e57c2;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            max-width: 200px;
+        }
+
+
+        .button-dropdown:hover, .button:hover, .randomize-button:hover, .restart-button:hover, .back-button:hover {
+            background-color: #5d2c91;
+        }
+        
+        .sliders-section {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .switch-slider {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .switch-slider input {
+            display: none;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #7e57c2;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #5d2c91;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .volume-button {
+            width: 40px;
+            height: 40px;
+            background-color: #5d2c91;
+            color: white;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+        }
+
+        .volume-button-label {
+            font-size: 15px;
+            font-weight: bold;
+            width: 40px;
+            color: #fff; 
+            text-align: center;
+        }
+
+        .volume-button:hover {
+            background-color: #a08ab8;
+        }
+
+        .volume-display {
+            font-size: 15px;
+            font-weight: bold;
+            width: 40px;
+            color: #fff; 
+            text-align: center;
+        }
+
+        .volume-display::after {
+            content: "%";
+        }
+
+        .volume-buttons button {
+            background-color: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .volume-buttons button:hover {
+            color: #8b74a3;
+        }
+
+
+    .prev-next-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(126, 87, 194, 0.1);
+        width: 80%;
+        margin-top: 20px;
+        border-radius: 20px;
+        gap: 10%;
+        padding: 3%;
+        margin-bottom: 20px;
+    }
+
+    .prev-next-buttons button {
+        font-size: 18px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: color 0.3s;
+        border-radius: 20px;
+        padding: 5px 15px;
+        color: #fff;
+    }
+
+    .prev-next-buttons button:hover {
+        color: #7e57c2;
+    }
+
+    .hide {
+        display: none;
+    }
+
+
+
+    </style>
+</head>
+
+<body>
+    <button class="back-button" style="position: absolute; top: 10px; left: 10px;">Back</button>
+    <button class="restart-button" style="position: absolute; top: 10px; right: 10px;">Restart</button>
+    <div class="container">
+        <div id="auth-container">
+            <!-- <input type="text" id="auth-code-input" placeholder="Enter Code"> -->
+            <button id="submit-code" style="position: relative; top: 40px; padding: 10px 30px; font-size: 16px; border: none; background-color: #7e57c2; color: #fff; cursor: pointer; border-radius: 5px; margin-bottom: 20px;">Submit pin code please</button>
+            <p id="auth-error" style="color: red; display: none;">Incorrect code. Please try again.</p>
+        </div>
+    <div class="container">
+        <div class="switch-container scenarios">
+            <label class="switch-slider">
+                <input type="checkbox">
+            </label>
+            <span class="state-label"></span>
+            <span class="state-label hide">Create your own</span>
+        </div>
+        <div class="prev-next-buttons hide">
+            <button class="prev-button">Previous</button>
+            <button class="next-button">Next</button>
+        </div>
+        <button class="randomize-button" style="margin-top: -15px; transition: background-color 0.5s ease-out;" onclick="setTimeout(() => this.style.backgroundColor = '#7e57c2', 2000); this.style.backgroundColor = '#9e69bf'">Randomize</button>
+        <div class="switch-container"style="margin-top: 10px;">
+            <span class="label">Auto Randomize</span>
+            <label class="switch-slider">
+                <input id="autoRandomizeSwitch" type="checkbox">
+                <span class="slider"></span>
+            </label>
+            <br><br>
+            </label>
+        <div class="buttons-section">
+            <div class="dropdown-container">
+                <label for="dayNightDropdown">Day/Night:</label>
+                <select id="dayNightDropdown" class="button-dropdown">
+                    <option value="0">Day</option>
+                    <option value="1">Night</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="characterDropdown">Character:</label>
+                <select id="characterDropdown" class="button-dropdown">
+                    <option value="Empty" selected>Empty</option>
+                    <option value="Painter">Painter</option>
+                    <option value="Painter 2">Painter 2</option>
+                    <option value="Flowers">Flowers</option>
+                    <option value="Selfie">Selfie</option>
+                    <option value="Standing">Standing</option>
+                    <option value="Tie shoes">Tie shoes</option>
+                    <option value="Smoking pipe">Smoking pipe</option>
+                    <option value="Laying on the ground">Laying on the ground</option>
+                    <option value="Enjoy the sky">Enjoy the sky</option>
+                    <option value="Ready to go">Ready to go</option>
+                    <option value="Ready to go 2">Ready to go 2</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="skyDropdown">Sky:</label>
+                <select id="skyDropdown" class="button-dropdown">
+                    <option value= 0 selected>Empty</option>
+                    <option value= 1 >Sunny Sky</option>
+                    <option value= 2>Cloudy Sky</option>
+                    <option value= 3 >Starry Night</option>
+                    <option value= 4 >Stormy Sky</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="backgroundDropdown">Background:</label>
+                <select id="backgroundDropdown" class="button-dropdown">
+                    <option value="Empty" selected>Empty</option>
+                    <option value="Mountains" >Mountains</option>
+                    <option value="Mountains 2">Mountains 2</option>
+                    <option value="Forest">Forest</option>
+                    <option value="Sandy mountains">Sandy mountains</option>
+                    <option value="Mountains and trees">Mountais and trees</option>
+                    <option value="Mountains and trees 2">Mountais and trees 2</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="middleGroundDropdown">Middle-Ground:</label>
+                <select id="middleGroundDropdown" class="button-dropdown">
+                    <option value="Empty" selected>Empty</option>
+                    <option value="Bushes" >Bushes</option>
+                    <option value="Beach">Beach</option>
+                    <option value="Wheat field">Wheat field</option>
+                    <option value="Wheat field 2">Wheat field 2</option>
+                    <option value="Red Bushes">Red Bushes</option>
+                    <option value="Rocks">Rocks</option>
+                    <option value="Sunflowers">Sunflowers</option>
+                    <option value="Hill">Hill</option>
+                </select>
+
+            </div>
+            
+            <div class="dropdown-container">
+                <label for="treesDropdown">Trees:</label>
+                <select id="treesDropdown" class="button-dropdown">
+                    <option value="Empty" selected>Empty</option>
+                    <option value="Tree 1">Tree 1</option>
+                    <option value="Tree 2">Tree 2</option>
+                    <option value="Tree 3">Tree 3</option>
+                </select>
+            </div>
+            <div class="dropdown-container">
+                <label for="foregroundDropdown">Foreground:</label>
+                <select id="foregroundDropdown" class="button-dropdown">
+                    <option value="Empty" selected>Empty</option>
+                    <option value="Sunflower 1"> Sunflower 1</option>
+                    <option value="Sunflower 2">Sunflower 2</option>
+                    <option value="Sunflower 3">Sunflower 3</option>
+                    <option value="Wheat">Wheat</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="sliders-section">
+            <span class="label">Effect</span>
+
+            <input class="balance-slider" type="range" min="0" max="100" value="0">Paint</input>
+            <input class="balance-slider" type="range" min="0" max="100" value="0">Liquid</input>
+        </div>
+        <div class="switch-container music">
+            <span class="label">Music</span>
+            <label class="switch-slider">
+                <input id="musicSwitch" type="checkbox" unckecked>
+                <span class="slider"></span>
+            </label>
+            <span class="state-label">Off</span>
+            <span class="state-label hide">On</span>
+            <div class="volume-container" style="display: none;">
+                <div style="position: relative; top: -11px;" class="volume-container">
+                    <label style="color: white;" for="volume-container">Volume level:</label>
+                    <button class="volume-button" onclick="changeVolume(-10)">-</button>
+                    <span class="volume-display" id="volumeValue">50</span>
+                    <button class="volume-button" onclick="changeVolume(10)">+</button>
+                </div>
+                <div class="dropdown-container">
+                    <label for="foregroundDropdown">Song:</label>
+                    <select id="musicDropdown" class="button-dropdown">
+                        <option value="01_The View From Here" selected> 01_The View From Here</option>
+                        <option value="02_Oh So Many Stars">02_Oh So Many Stars</option>
+                        <option value="03_Odiles Garden">03_Odiles Garden</option>
+                        <option value="04_Stepping Stones Under Water">04_Stepping Stones Under Water</option>
+                        <option value="05_Lone Tree">05_Lone Tree</option>
+                        <option value="06_Rise">06_Rise</option>
+                        <option value="07_A Beacon To Guide You Home">07_A Beacon To Guide You Home</option>
+                        <option value="08_Medano Creek">08_Medano Creek</option>
+                        <option value="09_The Embrace">09_The Embrace</option>
+                        <option value="10_Van Gogh Sky">10_Van Gogh Sky</option>
+                        <option value="11_The Parting Glass">11_The Parting Glass</option>
+                        <option value="12_Aerial">12_Aerial</option>
+
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function disableControls() {
+    const elements = document.querySelectorAll('input, button, select');
+    elements.forEach(element => {
+        if (!element.closest('#auth-container')) {
+            element.disabled = true;
+        }
+    });
+}
+
+
+        disableControls();
+        const socket = new WebSocket('wss://fvg2-dc0b726ecf29.herokuapp.com:443');
+        
+        socket.onopen = function(event) {
+            console.log('WebSocket connection opened');
+            resetSettings(); // Esegui reset all'avvio della pagina
+        };
+        
+        socket.onmessage = function(event) {
+            console.log('Message received:', event.data);
+        };
+        
+        socket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+        
+        socket.onclose = function(event) {
+            console.log('WebSocket connection closed');
+        };
+        
+        function sendData(data) {
+            if (socket.readyState === WebSocket.OPEN) {
+                socket.send(JSON.stringify(data));
+            } else {
+                console.error('WebSocket connection is not open');
+            }
+        }
+        function checkPin() 
+        {
+        let storedPin = localStorage.getItem("userPin");
+        let enteredPin = prompt("Enter your PIN:");
+
+        if (enteredPin === storedPin) {
+            document.body.style.display = "body"; // Unlock the page
+        } else {
+            alert("Wrong PIN!");
+            window.location.href = "first.html"; // Redirect back
+        }
+    }
+        
+        function resetSettings() {
+            sendData('reset')
+        }
+        
+        document.querySelector('.restart-button').addEventListener('click', function() {
+            location.reload();
+            resetSettings // Ricarica la pagina
+        });
+        
+        document.querySelector('.back-button').addEventListener('click', function() {
+            sendData({ keypress: 'z' });
+            sendData({ index: 8, music: 1 }); // Invia stato musica
+            sendData({ index: 9, music: 0 }); // Invia stato musica
+        
+            sendData({ index: 0, value: 1 });
+            sendData({ index: 1, value: 1 });
+            sendData({ index: 2, value: 1 });
+            sendData({ index: 3, value: 1 });
+            sendData({ index: 4, value: 1 });
+            sendData({ index: 5, value: 1 });
+            sendData({ index: 6, value: 1 });
+            sendData({ index: 7, value: 1 });
+            sendData({ index: 9, value: 1 });
+            
+
+        
+            window.location.href = 'start.html'; // Naviga a start.html
+        });
+
+        // Definisci la funzione startTimer
+function startTimer(duration) {
+    let timer = duration, minutes, seconds;
+    const intervalId = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        console.log(minutes + ":" + seconds);
+
+        if (--timer < 0) {
+            clearInterval(intervalId);  // Ferma il timer quando finisce
+            // Qui puoi inserire la logica da eseguire quando il timer scade
+            alert("Il tempo è scaduto. La pagina verrà ricaricata.");
+            location.reload();  // Ricarica la pagina o disabilita i controlli, come preferisci
+        }
+    }, 1000);
+}
+
+    // -------------------------codice per server python-----------------
+
+    
+    document.getElementById('submit-code').addEventListener('click', function() {
+        const storedPin = localStorage.getItem("pin");
+        const enteredPin = prompt("Enter your PIN:");
+
+        if (enteredPin === storedPin) {
+            enableControls() // Unlock the page
+        } else {
+            alert("Wrong PIN!");
+            window.location.href = "pin_generator.html";
+        }
+    });
+
+function enableControls() {
+    const elements = document.querySelectorAll('input, button, select');
+    elements.forEach(element => {
+        element.disabled = false;
+    });
+}
+
+
+        function handleDropdownChange() {
+            const dropdowns = document.querySelectorAll('.button-dropdown');
+            dropdowns.forEach(function (dropdown, index) {
+                dropdown.addEventListener('change', function () {
+                    const selectedValue = this.value;
+                    sendData({ '.button-dropdown': index, value: selectedValue });
+                });
+            });
+        }
+        
+        handleDropdownChange();
+        
+        function handleScenarioSwitchChange() {
+            const scenarioSwitch = document.querySelector('.switch-container.scenarios input[type="checkbox"]');
+            const prevNextButtons = document.querySelector('.prev-next-buttons');
+            const buttonsSection = document.querySelector('.buttons-section');
+            const slidersSection = document.querySelector('.sliders-section');
+            const stateLabels = document.querySelectorAll('.switch-container.scenarios .state-label');
+        
+            scenarioSwitch.addEventListener('change', function () {
+                sendData({ keypress: 'l' });
+                if (this.checked) {
+                    prevNextButtons.classList.remove('hide');
+                    buttonsSection.classList.add('hide');
+                    slidersSection.classList.add('hide');
+                    stateLabels[0].classList.add('hide');
+                    stateLabels[1].classList.remove('hide');
+                } else {
+                    prevNextButtons.classList.add('hide');
+                    buttonsSection.classList.remove('hide');
+                    slidersSection.classList.remove('hide');
+                    stateLabels[0].classList.remove('hide');
+                    stateLabels[1].classList.add('hide');
+                }
+            });
+        }
+        
+        function handleMusicSwitchChange() {
+            const musicSwitch = document.querySelector('#musicSwitch');
+            const volumeContainer = document.querySelector('.volume-container');
+            const stateLabels = document.querySelectorAll('.switch-container.music .state-label');
+
+            const updateUI = (isChecked) => {
+                sendData({ index: 'audio', value: isChecked ? 1 : 0 });
+                volumeContainer.style.display = isChecked ? 'flex' : 'none';
+                stateLabels[0].classList.toggle('hide', isChecked);
+                stateLabels[1].classList.toggle('hide', !isChecked);
+            };
+
+            musicSwitch.addEventListener('change', function () {
+                updateUI(this.checked);
+            });
+        }
+        handleScenarioSwitchChange();
+        handleMusicSwitchChange();
+        
+        // Volume up and volume down buttons
+        const volumeUpButton = document.querySelector('.volume-up');
+        const volumeDownButton = document.querySelector('.volume-down');
+        
+        if (volumeUpButton && volumeDownButton) {
+            volumeUpButton.addEventListener('click', function () {
+                sendData({ keypress: 'n' });
+            });
+        
+            volumeDownButton.addEventListener('click', function () {
+                sendData({ keypress: 'b' });
+            });
+        }
+        
+        // Volume +-
+        let volume = 50; // Default value
+
+        function changeVolume(amount) {
+            volume = Math.min(100, Math.max(0, volume + amount)); // Ensure 0-100 range
+            document.getElementById("volumeValue").textContent = volume;
+            sendData({ index: 'volumelevel', value: volume });
+        }
+        
+        // Balance sliders
+        const balanceSliders = document.querySelectorAll('.balance-slider');
+        if (balanceSliders.length === 2) {
+            balanceSliders[0].addEventListener('input', function () {
+                sendData({ slider:'paint', value: this.value });
+            });
+        
+            balanceSliders[1].addEventListener('input', function () {
+                sendData({ slider:'liquid', value: this.value  });
+            });
+        }
+        
+        // Next and Previous buttons
+        const nextButton = document.querySelector('.next-button');
+        const prevButton = document.querySelector('.prev-button');
+        
+        if (nextButton && prevButton) {
+            nextButton.addEventListener('click', function () {
+                sendData({ keypress: 'next' });
+            });
+        
+            prevButton.addEventListener('click', function () {
+                sendData({ keypress: 'prev' });
+            });
+        }
+        document.querySelector('.randomize-button').addEventListener('click', function() {
+    randomizeDropdowns();
+});
+
+let autoRandomizeInterval;
+
+document.getElementById('autoRandomizeSwitch').addEventListener('change', function() {
+    if (this.checked) {
+        startAutoRandomize();
+    } else {
+        stopAutoRandomize();
+    }
+});
+
+function startAutoRandomize() {
+    autoRandomizeInterval = setInterval(randomizeDropdowns, 10000); // Randomizza ogni 3 secondi
+}
+
+function stopAutoRandomize() {
+    clearInterval(autoRandomizeInterval);
+}
+
+let alreadyRandomized = false;
+
+function randomizeDropdowns() {
+    const button = document.querySelector('.randomize-button');
+    button.classList.add('inactive');
+    setTimeout(() => button.classList.remove('inactive'), 2500);
+
+    const dropdowns = document.querySelectorAll('.button-dropdown');
+
+    let i = 0;
+    const interval = setInterval(() => {
+        const dropdown = dropdowns[i];
+        const options = Array.from(dropdown.options).map(option => option.value);
+        const randomIndex = Math.floor(Math.random() * options.length);
+        const randomValue = options[randomIndex];
+
+        dropdown.selectedIndex = randomIndex;
+        sendData({ '.button-dropdown': i, value: randomValue }, true);
+
+        if (++i >= dropdowns.length) clearInterval(interval);
+    }, 250);
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+
+        </script>
+        
+</body>
+
+</html>
