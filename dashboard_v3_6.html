@@ -1,222 +1,229 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fancy Van Gogh - Mental Health Spa</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <style>
-        body.inactive {
-            pointer-events: none;
-        }
-    </style>
-    <style>
-            body {
-        font-family: 'Darker Grotesque', sans-serif;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        background: linear-gradient(-45deg, #0B3C5D, #6A1B9A, #82B1FF, #BF79FF);
-        background-size: 400% 400%;
-        animation: gradientAnimation 15s ease infinite;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fancy Van Gogh - Mental Health Spa</title>
+  
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <style>
+    /* Global box-sizing for layout sanity */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body.inactive {
+      pointer-events: none;
+    }
+
+    body {
+      font-family: 'Darker Grotesque', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(-45deg, #0B3C5D, #6A1B9A, #82B1FF, #BF79FF);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+      min-height: 100vh;
     }
 
     @keyframes gradientAnimation {
-        0% {
-            background-position: 0% 50%;
-        }
-        50% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0% 50%;
-        }
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
+
     .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: 90%;
-            max-width: 600px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            margin-top: 60px;
-        }
-        
-        .dropdown-container, .buttons-section, .switch-container, .prev-next-buttons {
-            width: 100%;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .button-dropdown, .button, .randomize-button, .restart-button, .back-button {
-            padding: 10px 25px;
-            font-size: 16px;
-            border: none;
-            background-color: #7e57c2;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-            max-width: 200px;
-        }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 90%;
+      max-width: 600px;
+      padding: 20px 10px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+    }
 
+    .dropdown-container, .buttons-section, .switch-container, .prev-next-buttons {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
 
-        .button-dropdown:hover, .button:hover, .randomize-button:hover, .restart-button:hover, .back-button:hover {
-            background-color: #5d2c91;
-        }
-        
-        .sliders-section {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .switch-slider {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-        
-        .switch-slider input {
-            display: none;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #7e57c2;
-            transition: .4s;
-            border-radius: 34px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: #5d2c91;
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
+    .button-dropdown, .button, .randomize-button, .restart-button, .back-button {
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      background-color: #7e57c2;
+      color: #fff;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 100%;
+    }
 
-        .volume-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .volume-button {
-            width: 40px;
-            height: 40px;
-            background-color: #5d2c91;
-            color: white;
-            font-size: 20px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 5px;
-        }
+    .button-dropdown:hover, .button:hover, .randomize-button:hover, .restart-button:hover, .back-button:hover {
+      background-color: #5d2c91;
+    }
 
-        .volume-button-label {
-            font-size: 15px;
-            font-weight: bold;
-            width: 40px;
-            color: #fff; 
-            text-align: center;
-        }
+    .sliders-section {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-bottom: 20px;
+    }
 
-        .volume-button:hover {
-            background-color: #a08ab8;
-        }
+    .switch-slider {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
 
-        .volume-display {
-            font-size: 15px;
-            font-weight: bold;
-            width: 40px;
-            color: #fff; 
-            text-align: center;
-        }
+    .switch-slider input {
+      display: none;
+    }
 
-        .volume-display::after {
-            content: "%";
-        }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #7e57c2;
+      transition: .4s;
+      border-radius: 34px;
+    }
 
-        .volume-buttons button {
-            background-color: transparent;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #fff;
-            transition: color 0.3s;
-        }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
 
-        .volume-buttons button:hover {
-            color: #8b74a3;
-        }
+    input:checked + .slider {
+      background-color: #5d2c91;
+    }
 
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    .volume-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .volume-button {
+      width: 40px;
+      height: 40px;
+      background-color: #5d2c91;
+      color: white;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px;
+    }
+
+    .volume-button-label, .volume-display {
+      font-size: 15px;
+      font-weight: bold;
+      width: 40px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .volume-display::after {
+      content: "%";
+    }
+
+    .volume-buttons button {
+      background-color: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #fff;
+      transition: color 0.3s;
+    }
+
+    .volume-buttons button:hover {
+      color: #8b74a3;
+    }
 
     .prev-next-buttons {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(126, 87, 194, 0.1);
-        width: 80%;
-        margin-top: 20px;
-        border-radius: 20px;
-        gap: 10%;
-        padding: 3%;
-        margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(126, 87, 194, 0.1);
+      width: 80%;
+      margin-top: 20px;
+      border-radius: 20px;
+      gap: 10%;
+      padding: 3%;
+      margin-bottom: 20px;
     }
 
     .prev-next-buttons button {
-        font-size: 18px;
-        border: none;
-        background-color: transparent;
-        cursor: pointer;
-        transition: color 0.3s;
-        border-radius: 20px;
-        padding: 5px 15px;
-        color: #fff;
+      font-size: 18px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: color 0.3s;
+      border-radius: 20px;
+      padding: 5px 15px;
+      color: #fff;
     }
 
     .prev-next-buttons button:hover {
-        color: #7e57c2;
+      color: #7e57c2;
     }
 
     .hide {
-        display: none;
+      display: none;
     }
 
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .container {
+        margin-top: 20px;
+        padding: 15px 5px;
+      }
 
+      .prev-next-buttons {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+      }
 
-    </style>
+      .volume-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .volume-button-label, .volume-display {
+        width: auto;
+      }
+    }
+  </style>
 </head>
 
 <body>
